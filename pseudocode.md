@@ -34,9 +34,10 @@ TurnCounter: 0 (keeps track of turn number)
 
 
 
-View
+# View
 
 push model to the page
+create and display 9 buttons with a default value of ' '
 
 
 
@@ -44,7 +45,7 @@ push model to the page
 # Controller
 
 Functions to make:
-
+function onClick()
     Set state of board (in setters for model)
         i is the clicked tile
         let board[i] = currentplayer
@@ -57,8 +58,10 @@ Functions to make:
         remove the event listener associated with that specific tile
         apply css class "clicked" to make it not look like a button anymore
 
-compare to wincons
-    how to do this.
+compare to wincons()
+    list out all possible win conditions
+    if current player is x and win condition is true "x wins"
+    if current player is o and win condition is true "o wins"
 
 switch the turn
     if current player ='x' {
@@ -73,3 +76,8 @@ function reset()
     update the view
     remove the popup
     unlock buttons
+
+function endGame()
+    make pop up that displays winner
+    lock down buttons
+    direct user to reset button
