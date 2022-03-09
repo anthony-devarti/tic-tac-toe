@@ -23,8 +23,6 @@ form {
 
 [type="text"],
 button {
-  display: inline-block;
-  -webkit-appearance: none;
   padding: .5rem 1rem;
   font-size: 1rem;
   border: 2px solid #ccc;
