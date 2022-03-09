@@ -47,15 +47,19 @@ class Model {
         this.title = this.createElement('h1')
         this.title.textContent = 'Tic-Tac-Toe'
 
-        this.tile = this.createElement('tile')
-        this.tile.textContent = 'placeholder'
+        //how to make this appear 9 times, in a 3x3 grid
+        this.tile = this.createElement('button')
+        this.tile.textContent = ' '
 
-        this.restartButton = this.createElement('button')
+        this.restartButton = this.createElement('reset')
         this.restartButton.textContent = "reset"
 
-        this.app.append(this.title, this.tile, this.restartButton)
-    }
+        this.app.append(this.title)
 
+        this.app.append(this.tile)
+
+        this.app.append(this.restartButton)
+    }
     createElement(tag, className){
         const element = document.createElement(tag)
         if (className) element.classList.add(className)
