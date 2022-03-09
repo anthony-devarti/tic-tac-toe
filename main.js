@@ -47,18 +47,47 @@ class Model {
         this.title = this.createElement('h1')
         this.title.textContent = 'Tic-Tac-Toe'
 
+        this.board = this.createElement('board')
+        this.board.style.width = '400px'
+        this.board.style.height = '400px'
+
         //how to make this appear 9 times, in a 3x3 grid
         this.tile = this.createElement('button')
         this.tile.textContent = ' '
 
         this.restartButton = this.createElement('reset')
-        this.restartButton.textContent = "reset"
+        this.restartButton.textContent = 'reset'
 
+        this.row = this.createElement('div', 'row')
+        
+        this.col = this.createElement('div', 'col')
+
+        // this.container = this.createElement('div', 'container')
+
+        // this.app.append(this.title)
+
+        // this.app.append(this.container)
+
+        // this.container.append(this.row)
+
+        // this.row.append(this.col)
+
+        // this.col.append(this.tile)
+
+        
+        //this is showing up correctly
         this.app.append(this.title)
-
-        this.app.append(this.tile)
-
-        this.app.append(this.restartButton)
+        //this.app.append(this.row)
+        this.app.append(this.board)
+        for (let i = 0; i < 9; i++) {
+            let tile = document.createElement('button')
+            tile.classList = `tile`
+            tile.id = 'tile' + i
+            this.board.append(tile)
+        }
+        this.app.append(this.row)
+        this.row.append(this.col)
+        this.col.append(this.restartButton)
     }
     createElement(tag, className){
         const element = document.createElement(tag)

@@ -34,7 +34,7 @@ button {
   background: #7b8185;
   color: white;
   border: 2px solid #007bff;
-  margin: 0 .5rem;
+  margin: 5px;
   height: 100px;
   width: 100px;
 }
@@ -59,8 +59,10 @@ reset {
   background: #074ed1;
   color: white;
   border: 2px solid #007bff;
-  margin: 0 .5rem;
+  margin: 5px;
   position: fixed-0.0;
+  align-items: center;
+  width: 100px;
 }
 h1 {
   color: #222;
@@ -99,6 +101,17 @@ li span:focus {
 
 tile{
     width: 100px;
+    height: 100px;
+    border-left: black 5px;
+    border-bottom: black 5px;
+    padding: 5px;
+    margin: 5px;
+    margin-top: 3px;
+    text-align: center;
+}
+
+cell {
+  width: 100px;
     height: 100px;
     border-left: black 5px;
     border-bottom: black 5px;
