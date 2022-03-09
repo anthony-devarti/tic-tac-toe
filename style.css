@@ -87,7 +87,10 @@ li span:focus {
   background: rgba(179, 207, 255, 0.52)
 }
 
-#tile{
-    width: 80px;
+tile{
+    width: 100px;
+    height: 100px;
+    border-left: black 5px;
+    border-bottom: black 5px;
     padding: 5px
 }
