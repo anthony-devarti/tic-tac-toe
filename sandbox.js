@@ -1,3 +1,5 @@
+const { Alert } = require("bootstrap");
+
 board=  ["o","x","o",
         "x", "x","o",
         "o","o", "x"]
@@ -13,6 +15,8 @@ switch (true) {
         case  board[0]=='x' && board[4]=='x' && board[8]=='x':
             //make a pop up that says that x wins
             console.log('x wins')
+            Alert('x wins!')
+            //toast
             break;
         case  board[0]=='o' && board[1]=='o' && board[2]=='o':
         case  board[3]=='o' && board[4]=='o' && board[5]=='o':
@@ -24,11 +28,13 @@ switch (true) {
         case  board[0]=='o' && board[4]=='o' && board[8]=='o':
             //make a pop up that says 0 wins
             console.log('o wins')
+            Alert('o wins!')
             break;
 
         case !board.includes(' '): //probably bad syntactically, but if the board does not have any spaces left, 
             //make a pop up that says draw
             console.log('this game is a draw')
+            Alert('this game is a draw')
             break;
         default:
             break;

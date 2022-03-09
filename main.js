@@ -37,7 +37,7 @@ class Model {
         }
     };
     
-    
+    //setter for the board state should probably be here
 }
   
   class View {
@@ -108,6 +108,31 @@ class Model {
     constructor(model, view) {
       this.model = model
       this.view = view
+    }
+
+    onClick(id, currentPlayer){
+        manipulateBoard(id)
+        // updateView()
+        // removeEventListener()
+        // winCons()
+        this.swapPlayer(currentPlayer)
+    }
+        //Set state of board (in setters for model)
+        // i is the clicked tile
+        // let board[i] = currentplayer
+    // update view
+    //         show symbols on each tile according to the current state of the board object
+    // remove the event listener
+    //     remove the event listener associated with that specific tile
+    //     apply css class "clicked" to make it not look like a button anymore
+    // wincons()
+    //     written out in sandbox
+    switch(){
+        if (currentPlayer ='x') {
+            currentPlayer = 'o'
+        } else {
+            currentPlayer ='x'
+        }
     }
   }
   
