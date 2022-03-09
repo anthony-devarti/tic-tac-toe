@@ -1,23 +1,12 @@
-Model
+# Model
 
 define a board object and give empty values so that they can be set as x or o or null
 null should be the default and it can be adjusted by the controller
-    let board = {
-    0: null,
-    1: null,
-    2: null,
-    3: null,
-    4: null,
-    5: null,
-    6: null,
-    7: null,
-    8: null
 }
-let board = [
+### this is the board with the indexes labeled 
     0, 1, 2,
     3, 4, 5,
     6, 7, 8
-] //
 
 
 let board = []
@@ -43,6 +32,8 @@ push model to the page
 create and display 9 buttons with a default value of ' '
     buttons should be correlated to the value of their same index in the board
     the button id should match their board index for clarity
+    button id for the button that controls index 0 would be 0, index 1's button would be 1 et al
+
 create an area for the title
 create a zone for messages such as who's turn it is
     modal or alert in bootstrap
@@ -65,9 +56,7 @@ function onClick()
         remove the event listener associated with that specific tile
         apply css class "clicked" to make it not look like a button anymore
     wincons()
-        list out all possible win conditions
-        if current player is x and win condition is true "x wins"
-        if current player is o and win condition is true "o wins"
+        written out in sandbox
     switch()
         if current player ='x' {
             current player = 'o'
@@ -79,12 +68,19 @@ function onClick()
 
 function reset()
     set endGame:false
-    set model to default
+    set board to default
+        Board: [' ',' ',' ',
+                ' ',' ',' ',
+                ' ',' ',' ']
     update the view
+        I need to get into this to be able to figure out specifically what needs to be done
     remove the popup
+        display:hide?  maybe doing this with bootstrap would be ideal
     unlock buttons
+        change the button class back from clicked so they can be used again.
 
 function endGame()
     make pop up that displays winner
     lock down buttons
+    add to the score (stretch goal)
     direct user to reset button
