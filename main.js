@@ -20,11 +20,13 @@ class Model {
     };
 
     //this is working.  It changes the currentPlayer between 'x' and 'o'
-    swapPlayer(){
-        if (this.currentPlayer=='x'){
-            this.currentPlayer='o'
+    //removed 'this' from everything on this function to try to make it work with the arrow function in the 
+    //controller.  Be ready to put them back if that doesn't work
+    swapPlayer(currentPlayer){
+        if (currentPlayer=='x'){
+            currentPlayer='o'
         }  else{
-            this.currentPlayer='x'
+            currentPlayer='x'
         }
     }
 
@@ -133,6 +135,17 @@ class Model {
         } else {
             currentPlayer ='x'
         }
+    }
+    handleAddMark = (index) =>  {
+        this.Model.manipulateBoard(index)
+    }
+
+    handleSwapPlayer = (currentPlayer) => {
+        this.Model.swapPlayer(currentPlayer)
+    }
+
+    handleWinCon = () => {
+        this.Model.
     }
   }
   
