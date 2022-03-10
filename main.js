@@ -1,15 +1,15 @@
 class Model {
     constructor() {
         this.board = [
-            {text:' '},
-            {text:' '},
-            {text:' '},
-            {text:' '},
-            {text:' '},
-            {text:' '},
-            {text:' '},
-            {text:' '},
-            {text:' '}
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
         ]
         this.currentPlayer = 'x';
         this.EndGame = false;
@@ -146,37 +146,36 @@ class Controller {
         this.clear(e)
         //winCon -checks to see if a win was achieved
         console.log('checking for a winner')
+        let spot = app.model.board
         switch (true) {
-            case  app.model.board[0]=='x' && app.model.board[1]=='x' && app.model.board[2]=='x':
-            case  app.model.board[3]=='x' && app.model.board[4]=='x' && app.model.board[5]=='x':
-            case  app.model.board[6]=='x' && app.model.board[7]=='x' && app.model.board[8]=='x':
-            case  app.model.board[0]=='x' && app.model.board[3]=='x' && app.model.board[6]=='x':
-            case  app.model.board[1]=='x' && app.model.board[4]=='x' && app.model.board[7]=='x':
-            case  app.model.board[2]=='x' && app.model.board[5]=='x' && app.model.board[8]=='x':
-            case  app.model.board[2]=='x' && app.model.board[4]=='x' && app.model.board[6]=='x':
-            case  app.model.board[0]=='x' && app.model.board[4]=='x' && app.model.board[8]=='x':
+            case  spot[0]=='x' && spot[1]=='x' && spot[2]=='x':
+            case  spot[3]=='x' && spot[4]=='x' && spot[5]=='x':
+            case  spot[6]=='x' && spot[7]=='x' && spot[8]=='x':
+            case  spot[0]=='x' && spot[3]=='x' && spot[6]=='x':
+            case  spot[1]=='x' && spot[4]=='x' && spot[7]=='x':
+            case  spot[2]=='x' && spot[5]=='x' && spot[8]=='x':
+            case  spot[2]=='x' && spot[4]=='x' && spot[6]=='x':
+            case  spot[0]=='x' && spot[4]=='x' && spot[8]=='x':
                 //make a pop up that says that x wins
                 console.log('x wins')
-                Alert('x wins!')
                 //toast
                 break;
-            case  app.model.board[0]=='o' && app.model.board[1]=='o' && app.model.board[2]=='o':
-            case  app.model.board[3]=='o' && app.model.board[4]=='o' && app.model.board[5]=='o':
-            case  app.model.board[6]=='o' && app.model.board[7]=='o' && app.model.board[8]=='o':
-            case  app.model.board[0]=='o' && app.model.board[3]=='o' && app.model.board[6]=='o':
-            case  app.model.board[1]=='o' && app.model.board[4]=='o' && app.model.board[7]=='o':
-            case  app.model.board[2]=='o' && app.model.board[5]=='o' && app.model.board[8]=='o':
-            case  app.model.board[2]=='o' && app.model.board[4]=='o' && app.model.board[6]=='o':
-            case  app.model.board[0]=='o' && app.model.board[4]=='o' && app.model.board[8]=='o':
+            case  spot[0]=='o' && spot[1]=='o' && spot[2]=='o':
+            case  spot[3]=='o' && spot[4]=='o' && spot[5]=='o':
+            case  spot[6]=='o' && spot[7]=='o' && spot[8]=='o':
+            case  spot[0]=='o' && spot[3]=='o' && spot[6]=='o':
+            case  spot[1]=='o' && spot[4]=='o' && spot[7]=='o':
+            case  spot[2]=='o' && spot[5]=='o' && spot[8]=='o':
+            case  spot[2]=='o' && spot[4]=='o' && spot[6]=='o':
+            case  spot[0]=='o' && spot[4]=='o' && spot[8]=='o':
                 //make a pop up that says 0 wins
                 console.log('o wins')
-                Alert('o wins!')
                 break;
     
-            case app.model.board.includes(' '): //probably bad syntactically, but if the board does not have any spaces left, 
+            //for some reason, this immediately returns draw after the first move with a ! and never returns a draw without it
+            case !app.model.board.includes(null): //probably bad syntactically, but if the board does not have any spaces left, 
                 //make a pop up that says draw
                 console.log('this game is a draw')
-                Alert('this game is a draw')
                 break;
             default: //nothing
                 break;
