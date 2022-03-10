@@ -11,7 +11,7 @@ class Model {
             {text:' '},
             {text:' '}
         ]
-        this.currentPlayer = 'o';
+        this.currentPlayer = 'x';
         this.EndGame = false;
     }
     //this is working.  It changes the state of the current board
@@ -19,16 +19,21 @@ class Model {
         this.board[i] = this.currentPlayer
     };
 
+    //this is in the controller now
+
     //this is working.  It changes the currentPlayer between 'x' and 'o'
     //removed 'this' from everything on this function to try to make it work with the arrow function in the 
     //controller.  Be ready to put them back if that doesn't work
-    swapPlayer(currentPlayer){
-        if (currentPlayer=='x'){
-            currentPlayer='o'
-        }  else{
-            currentPlayer='x'
-        }
-    }
+    // swapPlayer(){
+    //     if (this.currentPlayer=='x'){
+    //         this.currentPlayer='o'
+    //         console.log(this.currentPlayer)
+    //     }  else{
+    //         this.currentPlayer='x'
+    //         console.log(this.currentPlayer)
+    //     }
+    // }
+
 
     //working as expected.  Renamed to end rather than endGame for clarity
     end(){
@@ -42,10 +47,11 @@ class Model {
     //setter for the board state should probably be here
 }
   
-  class View {
+class View {
     constructor() {
         this.app = this.getElement('#root')
 
+        //this.view =
         this.title = this.createElement('h1')
         this.title.textContent = 'Tic-Tac-Toe'
 
@@ -64,61 +70,55 @@ class Model {
         
         this.col = this.createElement('div', 'col')
 
-        // this.container = this.createElement('div', 'container')
-
-        // this.app.append(this.title)
-
-        // this.app.append(this.container)
-
-        // this.container.append(this.row)
-
-        // this.row.append(this.col)
-
-        // this.col.append(this.tile)
-
-        
         //this is showing up correctly
         this.app.append(this.title)
-        //this.app.append(this.row)
         this.app.append(this.board)
         for (let i = 0; i < 9; i++) {
             let tile = document.createElement('button')
             tile.classList = `tile`
-            tile.id = 'tile' + i
+            tile.id = 'tile' + i;
+            tile.dataset.num = i
             this.board.append(tile)
         }
+       
         this.app.append(this.row)
         this.row.append(this.col)
         this.col.append(this.restartButton)
+        }
+        createElement(tag, className){
+            const element = document.createElement(tag)
+            if (className) element.classList.add(className)
+
+            return element
+        }
+
+        getElement(selector){
+            const element = document.querySelector(selector)
+
+            return element
+        }
+        
+        updateView (e){
+            console.log('I update')
+            //make innertext of tile num equal to the current player's turn
+            e.target.textContent = app.model.currentPlayer
+        }
     }
-    createElement(tag, className){
-        const element = document.createElement(tag)
-        if (className) element.classList.add(className)
 
-        return element
-    }
 
-    getElement(selector){
-        const element = document.querySelector(selector)
-
-        return element
-    }
-  }
-    
-
-  class Controller {
+class Controller {
     constructor(model, view) {
-      this.model = model
-      this.view = view
+        this.model = model
+        this.view = view
     }
 
-    onClick(id, currentPlayer){
-        manipulateBoard(id)
-        // updateView()
-        // removeEventListener()
-        // winCons()
-        this.swapPlayer(currentPlayer)
-    }
+    // onClick(id, currentPlayer){
+    //     manipulateBoard(id)
+    //     // updateView()
+    //     // removeEventListener()
+    //     // winCons()
+    //     this.swapPlayer(currentPlayer)
+    // }
         //Set state of board (in setters for model)
         // i is the clicked tile
         // let board[i] = currentplayer
@@ -129,24 +129,60 @@ class Model {
     //     apply css class "clicked" to make it not look like a button anymore
     // wincons()
     //     written out in sandbox
-    switch(){
-        if (currentPlayer ='x') {
-            currentPlayer = 'o'
-        } else {
-            currentPlayer ='x'
+    // switch(){
+    //     if (currentPlayer ='x') {
+    //         currentPlayer = 'o'
+    //     } else {
+    //         currentPlayer ='x'
+    //     }
+    // }
+    click = (e) => {
+        console.log(e);
+        let num = e.target.dataset.num;
+        this.handleBoard(num) 
+        //adds a mark to the board
+        app.view.updateView(e)
+        //clear -turns off event listeners
+        //winCon -checks to see if a win was achieved
+        this.handleSwap()   
+    }
+
+    handleBoard = (num) =>  {
+        this.model.board[num] = this.model.currentPlayer
+        console.log(this.model.board)
+    }
+
+    handleSwap = () => {
+        if (this.model.currentPlayer=='x'){
+            this.model.currentPlayer='o'
+            console.log(this.model.currentPlayer)
+        }  else{
+            this.model.currentPlayer='x'
+            console.log(this.model.currentPlayer)
         }
     }
-    handleAddMark = (index) =>  {
-        this.Model.manipulateBoard(index)
+
+    //I do not understand what this is doing
+    // bindSwapPlayer(handle){
+    //     this.button.addEventListener('click', => e)
+    // }
+
+
+    
     }
 
-    handleSwapPlayer = (currentPlayer) => {
-        this.Model.swapPlayer(currentPlayer)
-    }
+const app = new Controller(new Model(), new View())
 
-    handleWinCon = () => {
-        this.Model.
-    }
-  }
-  
-  const app = new Controller(new Model(), new View())
+    //this is working, but now I'm trying to call the function in the mvc pattern.  I need this
+    // to go to the view and pass information to the controller, which will update the model.
+  //document.getElementById('tile0).addEventListener("click", app.model.swapPlayer);
+  document.getElementById('tile0').addEventListener('click', app.click);
+  document.getElementById('tile1').addEventListener('click', app.click);
+  document.getElementById('tile2').addEventListener('click', app.click);
+  document.getElementById('tile3').addEventListener('click', app.click);
+  document.getElementById('tile4').addEventListener('click', app.click);
+  document.getElementById('tile5').addEventListener('click', app.click);
+  document.getElementById('tile6').addEventListener('click', app.click);
+  document.getElementById('tile7').addEventListener('click', app.click);
+  document.getElementById('tile8').addEventListener('click', app.click);
+  //document.getElementById('tile0').addEventListener('click', app.handleAddMark(app.model.currentPlayer))
