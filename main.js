@@ -143,8 +143,18 @@ class Controller {
         //adds a mark to the board
         app.view.updateView(e)
         //clear -turns off event listeners
+        this.clear(e)
         //winCon -checks to see if a win was achieved
         this.handleSwap()   
+    }
+
+    winCon = () => {
+        
+    }
+
+    clear = (e) => {
+        console.log(e.target.dataset.num)
+        document.getElementById(`tile${e.target.dataset.num}`).removeEventListener('click', app.click)
     }
 
     handleBoard = (num) =>  {
