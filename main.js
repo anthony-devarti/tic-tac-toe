@@ -63,7 +63,8 @@ class View {
         // this.tile = this.createElement('button')
         // this.tile.textContent = ' '
 
-        this.restartButton = this.createElement('reset')
+        this.restartButton = this.createElement('button', 'reset')
+        this.restartButton.id = 'resetButton'
         this.restartButton.textContent = 'reset'
 
         this.row = this.createElement('div', 'row')
@@ -73,7 +74,7 @@ class View {
         this.card = this.createElement('div', 'card')
         this.cardheader = this.createElement('div', 'cardheader')
         this.cardbody = this.createElement('div', 'cardbody')
-        this.cardheader.textContent = "X's turn!"
+        //this.cardheader.textContent = `${app.model.currentPlayer}'s turn!`
         this.cardbody = this.createElement('div', 'cardbody')
         this.cardbody.textContent = 'Player O is up next!.'
 
@@ -84,7 +85,7 @@ class View {
             let tile = document.createElement('button')
             tile.classList = `tile`
             tile.id = 'tile' + i;
-            tile.dataset.num = i
+            tile.dataset.num = i;
             this.board.append(tile)
         }
        
@@ -124,39 +125,17 @@ class Controller {
         this.view = view
     }
 
-    // onClick(id, currentPlayer){
-    //     manipulateBoard(id)
-    //     // updateView()
-    //     // removeEventListener()
-    //     // winCons()
-    //     this.swapPlayer(currentPlayer)
-    // }
-        //Set state of board (in setters for model)
-        // i is the clicked tile
-        // let board[i] = currentplayer
-    // update view
-    //         show symbols on each tile according to the current state of the board object
-    // remove the event listener
-    //     remove the event listener associated with that specific tile
-    //     apply css class "clicked" to make it not look like a button anymore
-    // wincons()
-    //     written out in sandbox
-    // switch(){
-    //     if (currentPlayer ='x') {
-    //         currentPlayer = 'o'
-    //     } else {
-    //         currentPlayer ='x'
-    //     }
-    // }
     click = (e) => {
         //console.log(e);
+        //takes the e param and turns it into something usable
         let num = e.target.dataset.num;
+        //updates the state of the board
         this.handleBoard(num) 
         //adds a mark to the board
         app.view.updateView(e)
         //clear -turns off event listeners
         this.clear(e)
-        //winCon -checks to see if a win was achieved
+        //checks to see if a win was achieved, handles the pop ups in case of a win or draw
         console.log('checking for a winner')
         let spot = app.model.board
         switch (true) {
@@ -170,7 +149,7 @@ class Controller {
             case  spot[0]=='x' && spot[4]=='x' && spot[8]=='x':
                 //make a pop up that says that x wins
                 console.log('x wins')
-                //toast
+                //endGame
                 break;
             case  spot[0]=='o' && spot[1]=='o' && spot[2]=='o':
             case  spot[3]=='o' && spot[4]=='o' && spot[5]=='o':
@@ -182,21 +161,19 @@ class Controller {
             case  spot[0]=='o' && spot[4]=='o' && spot[8]=='o':
                 //make a pop up that says 0 wins
                 console.log('o wins')
+                //endGame
                 break;
     
             //for some reason, this immediately returns draw after the first move with a ! and never returns a draw without it
             case !app.model.board.includes(null): //probably bad syntactically, but if the board does not have any spaces left, 
                 //make a pop up that says draw
                 console.log('this game is a draw')
+                //endGame
                 break;
             default: //nothing
                 break;
         }
         this.handleSwap()   
-    }
-
-    winCon = () => {
-        
     }
 
     clear = (e) => {
@@ -223,10 +200,18 @@ class Controller {
     // bindSwapPlayer(handle){
     //     this.button.addEventListener('click', => e)
     // }
-
+    reset = () => {
+        console.log('resetting the board')
+        app.model.board=[null, null, null, null, null, null, null, null, null]
+        console.log('resettting the buttons')
+        for (let i=0; i<app.model.board.length; i++){
+            //this path is working in the console, but not here
+            document.getElementByID(`tile${i}`).textContent = null
+        }
+    }
 
     
-    }
+}
 
 const app = new Controller(new Model(), new View())
 
@@ -243,3 +228,5 @@ const app = new Controller(new Model(), new View())
   document.getElementById('tile7').addEventListener('click', app.click);
   document.getElementById('tile8').addEventListener('click', app.click);
   //document.getElementById('tile0').addEventListener('click', app.handleAddMark(app.model.currentPlayer))
+  //add the event listener for the reset button
+  document.getElementById('resetButton').addEventListener('click', app.reset);
