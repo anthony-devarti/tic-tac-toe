@@ -60,8 +60,8 @@ class View {
         this.board.style.height = '400px'
 
         //how to make this appear 9 times, in a 3x3 grid
-        this.tile = this.createElement('button')
-        this.tile.textContent = ' '
+        // this.tile = this.createElement('button')
+        // this.tile.textContent = ' '
 
         this.restartButton = this.createElement('reset')
         this.restartButton.textContent = 'reset'
@@ -69,6 +69,13 @@ class View {
         this.row = this.createElement('div', 'row')
         
         this.col = this.createElement('div', 'col')
+
+        this.card = this.createElement('div', 'card')
+        this.cardheader = this.createElement('div', 'cardheader')
+        this.cardbody = this.createElement('div', 'cardbody')
+        this.cardheader.textContent = "X's turn!"
+        this.cardbody = this.createElement('div', 'cardbody')
+        this.cardbody.textContent = 'Player O is up next!.'
 
         //this is showing up correctly
         this.app.append(this.title)
@@ -84,7 +91,12 @@ class View {
         this.app.append(this.row)
         this.row.append(this.col)
         this.col.append(this.restartButton)
+        this.row.append(this.card)
+        this.card.append(this.cardheader)
+        this.cardheader.append(this.cardbody)
         }
+
+
         createElement(tag, className){
             const element = document.createElement(tag)
             if (className) element.classList.add(className)
