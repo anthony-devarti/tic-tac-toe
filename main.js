@@ -99,7 +99,7 @@ class View {
         }
         
         updateView (e){
-            console.log('I update')
+            //console.log('I update')
             //make innertext of tile num equal to the current player's turn
             e.target.textContent = app.model.currentPlayer
         }
@@ -137,7 +137,7 @@ class Controller {
     //     }
     // }
     click = (e) => {
-        console.log(e);
+        //console.log(e);
         let num = e.target.dataset.num;
         this.handleBoard(num) 
         //adds a mark to the board
@@ -145,6 +145,42 @@ class Controller {
         //clear -turns off event listeners
         this.clear(e)
         //winCon -checks to see if a win was achieved
+        console.log('checking for a winner')
+        switch (true) {
+            case  app.model.board[0]=='x' && app.model.board[1]=='x' && app.model.board[2]=='x':
+            case  app.model.board[3]=='x' && app.model.board[4]=='x' && app.model.board[5]=='x':
+            case  app.model.board[6]=='x' && app.model.board[7]=='x' && app.model.board[8]=='x':
+            case  app.model.board[0]=='x' && app.model.board[3]=='x' && app.model.board[6]=='x':
+            case  app.model.board[1]=='x' && app.model.board[4]=='x' && app.model.board[7]=='x':
+            case  app.model.board[2]=='x' && app.model.board[5]=='x' && app.model.board[8]=='x':
+            case  app.model.board[2]=='x' && app.model.board[4]=='x' && app.model.board[6]=='x':
+            case  app.model.board[0]=='x' && app.model.board[4]=='x' && app.model.board[8]=='x':
+                //make a pop up that says that x wins
+                console.log('x wins')
+                Alert('x wins!')
+                //toast
+                break;
+            case  app.model.board[0]=='o' && app.model.board[1]=='o' && app.model.board[2]=='o':
+            case  app.model.board[3]=='o' && app.model.board[4]=='o' && app.model.board[5]=='o':
+            case  app.model.board[6]=='o' && app.model.board[7]=='o' && app.model.board[8]=='o':
+            case  app.model.board[0]=='o' && app.model.board[3]=='o' && app.model.board[6]=='o':
+            case  app.model.board[1]=='o' && app.model.board[4]=='o' && app.model.board[7]=='o':
+            case  app.model.board[2]=='o' && app.model.board[5]=='o' && app.model.board[8]=='o':
+            case  app.model.board[2]=='o' && app.model.board[4]=='o' && app.model.board[6]=='o':
+            case  app.model.board[0]=='o' && app.model.board[4]=='o' && app.model.board[8]=='o':
+                //make a pop up that says 0 wins
+                console.log('o wins')
+                Alert('o wins!')
+                break;
+    
+            case app.model.board.includes(' '): //probably bad syntactically, but if the board does not have any spaces left, 
+                //make a pop up that says draw
+                console.log('this game is a draw')
+                Alert('this game is a draw')
+                break;
+            default: //nothing
+                break;
+        }
         this.handleSwap()   
     }
 
@@ -153,22 +189,22 @@ class Controller {
     }
 
     clear = (e) => {
-        console.log(e.target.dataset.num)
+        //console.log(e.target.dataset.num)
         document.getElementById(`tile${e.target.dataset.num}`).removeEventListener('click', app.click)
     }
 
     handleBoard = (num) =>  {
         this.model.board[num] = this.model.currentPlayer
-        console.log(this.model.board)
+        //console.log(this.model.board)
     }
 
     handleSwap = () => {
         if (this.model.currentPlayer=='x'){
             this.model.currentPlayer='o'
-            console.log(this.model.currentPlayer)
+            //console.log(this.model.currentPlayer)
         }  else{
             this.model.currentPlayer='x'
-            console.log(this.model.currentPlayer)
+            //console.log(this.model.currentPlayer)
         }
     }
 
