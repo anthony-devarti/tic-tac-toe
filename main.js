@@ -125,6 +125,12 @@ class View {
             this.cardheader.textContent = "The Game is Over!"
             this.cardbody.textContent = `Player ${app.model.currentPlayer} wins. Click Reset to start a new game.`
         }
+        draw(){
+            console.log('everyone is either really good or really bad a tic tac toe, here')
+            this.cardheader.textContent = "The Game is Over!"
+            this.cardbody.textContent = "The game ended in a draw. Reset to start a new game"
+        
+        }
     }
 
 
@@ -197,6 +203,7 @@ class Controller {
             case !app.model.board.includes(null): //probably bad syntactically, but if the board does not have any spaces left, 
                 //make a pop up that says draw
                 console.log('this game is a draw')
+                this.view.draw()
                 this.clearAll()
                 //endGame
                 break;
