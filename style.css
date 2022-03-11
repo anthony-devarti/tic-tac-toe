@@ -3,12 +3,14 @@ html {
   font-family: sans-serif;
   font-size: 1rem;
   background-color: rgb(255, 255, 255);
+  align-items: center;
 }
 
 #root {
   max-width: 450px;
   margin: 2rem auto;
   padding: 0 1rem;
+  align-items: center;
 }
 
 button {
@@ -26,13 +28,14 @@ button {
 }
 
 
-reset {
+#resetButton {
   cursor: pointer;
   background: #074ed1;
   color: white;
   border: 2px solid #007bff;
   margin: 5px;
-  position: fixed-0.0;
+  height: 40px;
+  position: relative;
   align-items: center;
   width: 100px;
 }
@@ -52,11 +55,8 @@ h1 {
 }
 
 board {
-  height: 250px;
-  width: 250px;
   display: flex;
   flex-flow: row wrap;
-  background-color: rgb(0, 0, 0);
   align-items: center;
   align-content: center;
 }
