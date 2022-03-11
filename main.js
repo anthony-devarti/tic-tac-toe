@@ -77,10 +77,13 @@ class View {
         //this.cardheader.textContent = `${app.model.currentPlayer}'s turn!`
         this.cardbody = this.createElement('div', 'cardbody')
         this.cardbody.textContent = 'Player O is up next!.'
+        this.container = this.createElement('div', 'container')
 
         //this is showing up correctly
-        this.app.append(this.title)
-        this.app.append(this.board)
+        //this.container.append(this.app)
+        this.app.append(this.container)
+        this.container.append(this.title)
+        this.container.append(this.board)
         for (let i = 0; i < 9; i++) {
             let tile = document.createElement('button')
             tile.classList = `tile`
@@ -89,7 +92,7 @@ class View {
             this.board.append(tile)
         }
        
-        this.app.append(this.row)
+        this.container.append(this.row)
         this.row.append(this.col)
         this.col.append(this.restartButton)
         this.row.append(this.card)
@@ -123,6 +126,22 @@ class Controller {
     constructor(model, view) {
         this.model = model
         this.view = view
+        let tiles = view.container.getElementsByClassName('tile');
+        for (let tile of tiles){
+        tile.addEventListener('click', this.click);
+        }
+        //.addEventListener('click', this.click)
+        // view.container.getElementById('tile1').addEventListener('click', this.click);
+        // view.container.getElementById('tile2').addEventListener('click', this.click);
+        // view.container.getElementById('tile3').addEventListener('click', this.click);
+        // view.container.getElementById('tile4').addEventListener('click', this.click);
+        // view.container.getElementById('tile5').addEventListener('click', this.click);
+        // view.container.getElementById('tile6').addEventListener('click', this.click);
+        // view.container.getElementById('tile7').addEventListener('click', this.click);
+        // view.container.getElementById('tile8').addEventListener('click', this.click);
+        //view.container.getElementById('tile0').addEventListener('click', app.handleAddMark(app.model.currentPlayer))
+        //add the event listener for the reset button
+        view.container.getElementsByClassName('reset')[0].addEventListener('click', this.reset);
     }
 
     click = (e) => {
@@ -173,7 +192,9 @@ class Controller {
             default: //nothing
                 break;
         }
-        this.handleSwap()   
+        this.handleSwap()
+        //moved this from the view constructor
+        app.view.cardheader.textContent = `${app.model.currentPlayer}'s turn!`   
     }
 
     clear = (e) => {
@@ -202,31 +223,27 @@ class Controller {
     // }
     reset = () => {
         console.log('resetting the board')
-        app.model.board=[null, null, null, null, null, null, null, null, null]
-        console.log('resettting the buttons')
-        for (let i=0; i<app.model.board.length; i++){
-            //this path is working in the console, but not here
-            document.getElementByID(`tile${i}`).textContent = null
-        }
+        // app.model.board=[null, null, null, null, null, null, null, null, null]
+        // console.log('resettting the buttons')
+        // for (let i=0; i<app.model.board.length; i++){
+        //     //this path is working in the console, but not here
+        //     document.getElementById(`tile${i}`).textContent = null
+        this.clearAll()
+        app = new Controller(new Model(), new View())
     }
 
+    clearAll() {
+        let tiles = this.view.container.getElementsByClassName('tile')
+        for (let tile of tiles){
+            tile.removeEventListener('click', app.click)
+        }
+    }
     
 }
 
-const app = new Controller(new Model(), new View())
+let app = new Controller(new Model(), new View())
 
     //this is working, but now I'm trying to call the function in the mvc pattern.  I need this
     // to go to the view and pass information to the controller, which will update the model.
   //document.getElementById('tile0).addEventListener("click", app.model.swapPlayer);
-  document.getElementById('tile0').addEventListener('click', app.click);
-  document.getElementById('tile1').addEventListener('click', app.click);
-  document.getElementById('tile2').addEventListener('click', app.click);
-  document.getElementById('tile3').addEventListener('click', app.click);
-  document.getElementById('tile4').addEventListener('click', app.click);
-  document.getElementById('tile5').addEventListener('click', app.click);
-  document.getElementById('tile6').addEventListener('click', app.click);
-  document.getElementById('tile7').addEventListener('click', app.click);
-  document.getElementById('tile8').addEventListener('click', app.click);
-  //document.getElementById('tile0').addEventListener('click', app.handleAddMark(app.model.currentPlayer))
-  //add the event listener for the reset button
-  document.getElementById('resetButton').addEventListener('click', app.reset);
+  
