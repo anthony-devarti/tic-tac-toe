@@ -73,10 +73,11 @@ class View {
 
         this.card = this.createElement('div', 'card')
         this.cardheader = this.createElement('div', 'cardheader')
+        this.cardheader.textContent = 'Player X, you go first!'
         this.cardbody = this.createElement('div', 'cardbody')
         //this.cardheader.textContent = `${app.model.currentPlayer}'s turn!`
         this.cardbody = this.createElement('div', 'cardbody')
-        this.cardbody.textContent = 'Player O is up next!.'
+        this.cardbody.textContent = "Get ready, Player O, you're next"
         this.container = this.createElement('div', 'container')
 
         //this is showing up correctly
@@ -97,7 +98,7 @@ class View {
         this.col.append(this.restartButton)
         this.row.append(this.card)
         this.card.append(this.cardheader)
-        this.cardheader.append(this.cardbody)
+        this.card.append(this.cardbody)
         }
 
 
@@ -194,7 +195,8 @@ class Controller {
         }
         this.handleSwap()
         //moved this from the view constructor
-        app.view.cardheader.textContent = `${app.model.currentPlayer}'s turn!`   
+        app.view.cardheader.textContent = `It's player ${app.model.currentPlayer}'s turn now!`
+        app.view.cardbody.textContent = `Player ${app.model.currentPlayer==='x' ? 'o' : 'x'} is up next`
     }
 
     clear = (e) => {
