@@ -120,6 +120,11 @@ class View {
             //make innertext of tile num equal to the current player's turn
             e.target.textContent = app.model.currentPlayer
         }
+        winner(){
+            console.log('a winner has been found')
+            this.cardheader.textContent = "The Game is Over!"
+            this.cardbody.textContent = `Player ${app.model.currentPlayer} wins. Click Reset to start a new game.`
+        }
     }
 
 
@@ -167,8 +172,10 @@ class Controller {
             case  spot[2]=='x' && spot[5]=='x' && spot[8]=='x':
             case  spot[2]=='x' && spot[4]=='x' && spot[6]=='x':
             case  spot[0]=='x' && spot[4]=='x' && spot[8]=='x':
-                //make a pop up that says that x wins
+                // view method called popUp make a pop up that says that x wins
+                this.view.winner()
                 console.log('x wins')
+                this.clearAll()
                 //endGame
                 break;
             case  spot[0]=='o' && spot[1]=='o' && spot[2]=='o':
@@ -180,7 +187,9 @@ class Controller {
             case  spot[2]=='o' && spot[4]=='o' && spot[6]=='o':
             case  spot[0]=='o' && spot[4]=='o' && spot[8]=='o':
                 //make a pop up that says 0 wins
+                this.view.winner()
                 console.log('o wins')
+                this.clearAll()
                 //endGame
                 break;
     
@@ -188,15 +197,17 @@ class Controller {
             case !app.model.board.includes(null): //probably bad syntactically, but if the board does not have any spaces left, 
                 //make a pop up that says draw
                 console.log('this game is a draw')
+                this.clearAll()
                 //endGame
                 break;
-            default: //nothing
+            default: 
+                app.view.cardheader.textContent = `It's player ${app.model.currentPlayer}'s turn, now!`
+                app.view.cardbody.textContent = `Player ${app.model.currentPlayer==='x' ? 'o' : 'x'} is up next`
                 break;
         }
         this.handleSwap()
         //moved this from the view constructor
-        app.view.cardheader.textContent = `It's player ${app.model.currentPlayer}'s turn now!`
-        app.view.cardbody.textContent = `Player ${app.model.currentPlayer==='x' ? 'o' : 'x'} is up next`
+        
     }
 
     clear = (e) => {
