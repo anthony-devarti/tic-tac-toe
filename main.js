@@ -27,6 +27,7 @@ class Model {
 
 
     //working as expected.  Renamed to end rather than endGame for clarity
+    //!use this instead of checking equality
     end(){
         if (this.EndGame == false){
             this.EndGame = true
@@ -120,11 +121,11 @@ class View {
         }
     }
 
-
 class Controller {
     constructor(model, view) {
         this.model = model
         this.view = view
+        //might be better in the view
         let tiles = view.container.getElementsByClassName('tile');
         for (let tile of tiles){
         tile.addEventListener('click', this.click);
@@ -140,12 +141,12 @@ class Controller {
         //updates the state of the board
         this.handleBoard(num) 
         //adds a mark to the board
-        app.view.updateBoard(e)
+        this.view.updateBoard(e)
         //clear -turns off event listeners
         this.clear(e)
         //checks to see if a win was achieved, handles the pop ups in case of a win or draw
         //console.log('checking for a winner')
-        let spot = app.model.board
+        let spot = this.model.board
         switch (true) {
             case  spot[0]=='x' && spot[1]=='x' && spot[2]=='x':
             case  spot[3]=='x' && spot[4]=='x' && spot[5]=='x':
@@ -177,7 +178,7 @@ class Controller {
                 break;
     
             //for some reason, this immediately returns draw after the first move with a ! and never returns a draw without it
-            case !app.model.board.includes(null): //probably bad syntactically, but if the board does not have any spaces left, 
+            case !this.model.board.includes(null): //probably bad syntactically, but if the board does not have any spaces left, 
                 //draw condition
                 //console.log('this game is a draw')
                 this.view.draw()
@@ -185,8 +186,8 @@ class Controller {
                 //update score?
                 break;
             default: 
-                app.view.cardheader.textContent = `It's player ${app.model.currentPlayer==='x' ? 'o' : 'x'}'s turn, now!`
-                app.view.cardbody.textContent = `Player ${app.model.currentPlayer==='x' ? 'x' : 'o'} is up next`
+                this.view.cardheader.textContent = `It's player ${this.model.currentPlayer==='x' ? 'o' : 'x'}'s turn, now!`
+                this.view.cardbody.textContent = `Player ${this.model.currentPlayer==='x' ? 'x' : 'o'} is up next`
                 break;
         }
         this.handleSwap()
@@ -195,7 +196,7 @@ class Controller {
 
     clear = (e) => {
         //console.log(e.target.dataset.num)
-        document.getElementById(`tile${e.target.dataset.num}`).removeEventListener('click', app.click)
+        document.getElementById(`tile${e.target.dataset.num}`).removeEventListener('click', this.click)
     }
 
     handleBoard = (num) =>  {
@@ -228,7 +229,7 @@ class Controller {
     clearAll() {
         let tiles = this.view.container.getElementsByClassName('tile')
         for (let tile of tiles){
-            tile.removeEventListener('click', app.click)
+            tile.removeEventListener('click', this.click)
         }
     }    
     newGame(){
@@ -238,5 +239,7 @@ class Controller {
 }
 //makes the first instance
 let app = new Controller(new Model(), new View())
+//instantiate an array of apps
+let apps=[]
 
   
