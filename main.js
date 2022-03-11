@@ -18,6 +18,7 @@ class Model {
             x:0,
             o:0
         }
+        this.currentGame = 0
     }
     //this is working.  It changes the state of the current board
     manipulateBoard(i){
@@ -218,8 +219,9 @@ class Controller {
        
         this.clearAll()
         app = new Controller(new Model(), new View())
+        app.model.currentGame++ 
         //I should turn off the current reset button so it doesn't still work after a new game
-        this.view.container.getElementById('reset').removeEventListener('click', this.reset)
+        this.view.container.getElementById('resetButton').removeEventListener('click', this.reset)
     }
 
     //clear all of the event listeners for tiles so they can't be clicked later 
@@ -228,7 +230,9 @@ class Controller {
         for (let tile of tiles){
             tile.removeEventListener('click', app.click)
         }
-        
+    }    
+    newGame(){
+           
     }
     
 }
