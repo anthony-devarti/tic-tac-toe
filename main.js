@@ -208,8 +208,8 @@ class Controller {
                 //endGame
                 break;
             default: 
-                app.view.cardheader.textContent = `It's player ${app.model.currentPlayer}'s turn, now!`
-                app.view.cardbody.textContent = `Player ${app.model.currentPlayer==='x' ? 'o' : 'x'} is up next`
+                app.view.cardheader.textContent = `It's player ${app.model.currentPlayer==='x' ? 'o' : 'x'}'s turn, now!`
+                app.view.cardbody.textContent = `Player ${app.model.currentPlayer==='x' ? 'x' : 'o'} is up next`
                 break;
         }
         this.handleSwap()
