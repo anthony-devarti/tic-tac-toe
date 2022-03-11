@@ -13,26 +13,16 @@ class Model {
         ]
         this.currentPlayer = 'x';
         this.EndGame = false;
+        //how to inherit these key value pairs when creating a new instance of this object?
+        this.score = {
+            x:0,
+            o:0
+        }
     }
     //this is working.  It changes the state of the current board
     manipulateBoard(i){
         this.board[i] = this.currentPlayer
     };
-
-    //this is in the controller now
-
-    //this is working.  It changes the currentPlayer between 'x' and 'o'
-    //removed 'this' from everything on this function to try to make it work with the arrow function in the 
-    //controller.  Be ready to put them back if that doesn't work
-    // swapPlayer(){
-    //     if (this.currentPlayer=='x'){
-    //         this.currentPlayer='o'
-    //         console.log(this.currentPlayer)
-    //     }  else{
-    //         this.currentPlayer='x'
-    //         console.log(this.currentPlayer)
-    //     }
-    // }
 
 
     //working as expected.  Renamed to end rather than endGame for clarity
@@ -59,10 +49,6 @@ class View {
         this.board.style.width = '400px'
         this.board.style.height = '400px'
 
-        //how to make this appear 9 times, in a 3x3 grid
-        // this.tile = this.createElement('button')
-        // this.tile.textContent = ' '
-
         this.restartButton = this.createElement('button', 'reset')
         this.restartButton.id = 'resetButton'
         this.restartButton.textContent = 'reset'
@@ -85,6 +71,7 @@ class View {
         this.app.append(this.container)
         this.container.append(this.title)
         this.container.append(this.board)
+        //procedurally creates 9 tiles and gices them unique numbers with the dataset
         for (let i = 0; i < 9; i++) {
             let tile = document.createElement('button')
             tile.classList = `tile`
@@ -101,7 +88,7 @@ class View {
         this.card.append(this.cardbody)
         }
 
-
+        //since I'm doing a lot of element creation, I made a method to create them with fewer characters
         createElement(tag, className){
             const element = document.createElement(tag)
             if (className) element.classList.add(className)
@@ -109,15 +96,16 @@ class View {
             return element
         }
 
+        //same, but for selection
         getElement(selector){
             const element = document.querySelector(selector)
 
             return element
         }
         
-        updateView (e){
+        updateBoard (e){
             //console.log('I update')
-            //make innertext of tile num equal to the current player's turn
+            //updates the board object to match the player who's making a move
             e.target.textContent = app.model.currentPlayer
         }
         winner(){
@@ -142,17 +130,7 @@ class Controller {
         for (let tile of tiles){
         tile.addEventListener('click', this.click);
         }
-        //.addEventListener('click', this.click)
-        // view.container.getElementById('tile1').addEventListener('click', this.click);
-        // view.container.getElementById('tile2').addEventListener('click', this.click);
-        // view.container.getElementById('tile3').addEventListener('click', this.click);
-        // view.container.getElementById('tile4').addEventListener('click', this.click);
-        // view.container.getElementById('tile5').addEventListener('click', this.click);
-        // view.container.getElementById('tile6').addEventListener('click', this.click);
-        // view.container.getElementById('tile7').addEventListener('click', this.click);
-        // view.container.getElementById('tile8').addEventListener('click', this.click);
-        //view.container.getElementById('tile0').addEventListener('click', app.handleAddMark(app.model.currentPlayer))
-        //add the event listener for the reset button
+       
         view.container.getElementsByClassName('reset')[0].addEventListener('click', this.reset);
     }
 
@@ -163,11 +141,11 @@ class Controller {
         //updates the state of the board
         this.handleBoard(num) 
         //adds a mark to the board
-        app.view.updateView(e)
+        app.view.updateBoard(e)
         //clear -turns off event listeners
         this.clear(e)
         //checks to see if a win was achieved, handles the pop ups in case of a win or draw
-        console.log('checking for a winner')
+        //console.log('checking for a winner')
         let spot = app.model.board
         switch (true) {
             case  spot[0]=='x' && spot[1]=='x' && spot[2]=='x':
@@ -178,9 +156,9 @@ class Controller {
             case  spot[2]=='x' && spot[5]=='x' && spot[8]=='x':
             case  spot[2]=='x' && spot[4]=='x' && spot[6]=='x':
             case  spot[0]=='x' && spot[4]=='x' && spot[8]=='x':
-                // view method called popUp make a pop up that says that x wins
+                // X wins condition
                 this.view.winner()
-                console.log('x wins')
+                //console.log('x wins')
                 this.clearAll()
                 //endGame
                 break;
@@ -192,20 +170,20 @@ class Controller {
             case  spot[2]=='o' && spot[5]=='o' && spot[8]=='o':
             case  spot[2]=='o' && spot[4]=='o' && spot[6]=='o':
             case  spot[0]=='o' && spot[4]=='o' && spot[8]=='o':
-                //make a pop up that says 0 wins
+                //O wins condition
                 this.view.winner()
-                console.log('o wins')
+                //console.log('o wins')
                 this.clearAll()
-                //endGame
+                //update score
                 break;
     
             //for some reason, this immediately returns draw after the first move with a ! and never returns a draw without it
             case !app.model.board.includes(null): //probably bad syntactically, but if the board does not have any spaces left, 
-                //make a pop up that says draw
-                console.log('this game is a draw')
+                //draw condition
+                //console.log('this game is a draw')
                 this.view.draw()
                 this.clearAll()
-                //endGame
+                //update score?
                 break;
             default: 
                 app.view.cardheader.textContent = `It's player ${app.model.currentPlayer==='x' ? 'o' : 'x'}'s turn, now!`
@@ -213,7 +191,6 @@ class Controller {
                 break;
         }
         this.handleSwap()
-        //moved this from the view constructor
         
     }
 
@@ -237,33 +214,27 @@ class Controller {
         }
     }
 
-    //I do not understand what this is doing
-    // bindSwapPlayer(handle){
-    //     this.button.addEventListener('click', => e)
-    // }
+    //reset the board, turn off all buttons when the game is complete, and create a new board
     reset = () => {
         console.log('resetting the board')
-        // app.model.board=[null, null, null, null, null, null, null, null, null]
-        // console.log('resettting the buttons')
-        // for (let i=0; i<app.model.board.length; i++){
-        //     //this path is working in the console, but not here
-        //     document.getElementById(`tile${i}`).textContent = null
+       
         this.clearAll()
         app = new Controller(new Model(), new View())
+        //I should turn off the current reset button so it doesn't still work after a new game
+        this.view.container.getElementById('reset').removeEventListener('click', this.reset)
     }
 
+    //clear all of the event listeners for tiles so they can't be clicked later 
     clearAll() {
         let tiles = this.view.container.getElementsByClassName('tile')
         for (let tile of tiles){
             tile.removeEventListener('click', app.click)
         }
+        
     }
     
 }
-
+//makes the first app
 let app = new Controller(new Model(), new View())
 
-    //this is working, but now I'm trying to call the function in the mvc pattern.  I need this
-    // to go to the view and pass information to the controller, which will update the model.
-  //document.getElementById('tile0).addEventListener("click", app.model.swapPlayer);
   
